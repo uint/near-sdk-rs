@@ -38,5 +38,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Failed to generate size comparison report! See the failed CI job for more details.',
+              body: 'Failed to generate size comparison report! See the [failed CI run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for more details.',
             });

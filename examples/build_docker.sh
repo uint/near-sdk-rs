@@ -8,6 +8,7 @@ YELLOW='\033[0;33m'
 NC='\033[0m'
 
 NAME="$1"
+USER_ID="$(id -u)"
 
 # Switch to current directory (./examples) then out to root for specific examples
 pushd $(dirname ${BASH_SOURCE[0]})
@@ -39,9 +40,10 @@ else
         -w /host/examples/"$NAME" \
         -e RUSTFLAGS='-C link-arg=-s' \
         -e CARGO_TARGET_DIR='/host/docker-target' \
+        -e USER_ID="$USER_ID" \
         -it nearprotocol/contract-builder:"$TAG" \
         /bin/bash
 fi
 
 docker start "$CONT_NAME"
-docker exec "$CONT_NAME" /bin/bash -c "./build.sh"
+docker exec -u $USER_ID "$CONT_NAME" /bin/bash -c "./build.sh"
